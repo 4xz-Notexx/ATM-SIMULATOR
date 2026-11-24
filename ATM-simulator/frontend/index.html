@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NEXUS BANK &mdash; ATM</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/animations.css" />
+</head>
+<body>
+  <!-- ================= ATM MACHINE ================= -->
+  <div class="atm-machine" id="atm">
+
+    <!-- Header / branding -->
+    <header class="atm-header">
+      <div class="brand">
+        <div class="brand-logo">N</div>
+        <div class="brand-text">
+          <span class="brand-name">NEXUS</span>
+          <span class="brand-sub">BANK</span>
+        </div>
+      </div>
+      <div class="atm-status"><span class="status-dot"></span> ONLINE</div>
+    </header>
+
+    <!-- Touchscreen -->
+    <main class="atm-screen" id="screen-area">
+
+      <!-- 1. WELCOME -->
+      <section class="screen active" id="screen-welcome">
+        <div class="welcome-inner">
+          <div class="welcome-chip"></div>
+          <h1 class="welcome-title">NEXUS BANK</h1>
+          <p class="welcome-tag">Touchscreen Banking</p>
+          <p class="welcome-sub">Welcome. Press START to begin your transaction.</p>
+          <button class="btn btn-primary btn-lg" data-action="start">START</button>
+          <p class="welcome-demo">Demo account &mdash; 1001 / 1234</p>
+        </div>
+      </section>
+
+      <!-- 2. LOGIN -->
+      <section class="screen" id="screen-login" data-needs-keypad="true">
+        <h2 class="screen-title">Card Authentication</h2>
+        <p class="screen-sub">Enter your account number and PIN</p>
+        <div class="login-fields">
+          <div class="field" id="login-account-field" data-select="account">
+            <label>Account Number</label>
+            <div class="field-display" id="login-account-display"></div>
+          </div>
+          <div class="field" id="login-pin-field" data-select="pin">
+            <label>PIN</label>
+            <div class="field-display masked" id="login-pin-display"></div>
+          </div>
+        </div>
+        <p class="login-hint">Tap a field to select it &middot; Demo: 1001 / 1234</p>
+        <div class="actions">
+          <button class="btn btn-danger" data-action="login-cancel">CANCEL</button>
+          <button class="btn btn-primary" data-action="login-enter">ENTER</button>
+        </div>
+      </section>
+
+      <!-- 3. MAIN MENU -->
+      <section class="screen" id="screen-menu">
+        <div class="menu-greeting">
+          <span class="menu-hello">Welcome,</span>
+          <span class="menu-name" id="menu-name">User</span>
+        </div>
+        <div class="menu-balance">Available Balance <strong id="menu-balance">--</strong></div>
+        <div class="menu-grid">
+          <button class="menu-btn accent-blue" data-action="go-balance"><span class="m-ico">&#8377;</span>Check Balance</button>
+          <button class="menu-btn accent-cyan" data-action="go-withdraw"><span class="m-ico">&darr;</span>Withdraw Cash</button>
+          <button class="menu-btn accent-green" data-action="go-deposit"><span class="m-ico">&uarr;</span>Deposit Cash</button>
+          <button class="menu-btn accent-violet" data-action="go-history"><span class="m-ico">&equiv;</span>Transaction History</button>
+          <button class="menu-btn accent-amber" data-action="go-services"><span class="m-ico">&#9776;</span>Other Services</button>
+          <button class="menu-btn accent-red" data-action="logout"><span class="m-ico">&#8962;</span>Logout</button>
+        </div>
+      </section>
+
+      <!-- 4. BALANCE -->
+      <section class="screen" id="screen-balance">
+        <h2 class="screen-title">Balance Inquiry</h2>
+        <div class="balance-card">
+          <div class="balance-label">Available Balance</div>
+          <div class="balance-amount" id="balance-amount">&#8377;0.00</div>
+          <div class="balance-acct">Account No. <span id="balance-acct-no"></span></div>
+        </div>
+        <div class="actions">
+          <button class="btn" data-action="menu">BACK</button>
+          <button class="btn btn-primary" data-action="print-receipt-balance">PRINT RECEIPT</button>
+        </div>
+      </section>
+
+      <!-- 5. WITHDRAW -->
+      <section class="screen" id="screen-withdraw" data-needs-keypad="true">
+        <h2 class="screen-title">Withdraw Cash</h2>
+        <p class="screen-sub">Select a quick amount or enter your own (multiples of 10)</p>
+        <div class="quick-amounts">
+          <button class="btn quick" data-amount="500">&#8377;500</button>
+          <button class="btn quick" data-amount="1000">&#8377;1,000</button>
+          <button class="btn quick" data-amount="2000">&#8377;2,000</button>
+          <button class="btn quick" data-amount="3000">&#8377;3,000</button>
+          <button class="btn quick" data-amount="5000">&#8377;5,000</button>
+        </div>
+        <div class="field amount-field" id="withdraw-field" data-select="withdraw">
+          <label>Custom amount</label>
+          <div class="field-display" id="withdraw-display"></div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-danger" data-action="menu">CANCEL</button>
+          <button class="btn btn-primary" data-action="withdraw">WITHDRAW</button>
+        </div>
+      </section>
+
+      <!-- 6. DEPOSIT -->
+      <section class="screen" id="screen-deposit" data-needs-keypad="true">
+        <h2 class="screen-title">Deposit Cash</h2>
+        <p class="screen-sub">Enter the amount to deposit</p>
+        <div class="field amount-field" id="deposit-field" data-select="deposit">
+          <label>Deposit amount</label>
+          <div class="field-display" id="deposit-display"></div>
+        </div>
+        <div class="actions">
+          <button class="btn btn-danger" data-action="menu">CANCEL</button>
+          <button class="btn btn-primary" data-action="deposit">DEPOSIT</button>
+        </div>
+      </section>
+
+      <!-- 7. HISTORY -->
+      <section class="screen" id="screen-history">
+        <h2 class="screen-title">Transaction History</h2>
+        <p class="screen-sub">Newest first &mdash; powered by the Transaction Stack (LIFO)</p>
+        <div class="history-list" id="history-list"></div>
+        <div class="actions">
+          <button class="btn" data-action="menu">BACK</button>
+          <button class="btn btn-warn" data-action="reverse">REVERSE LAST</button>
+        </div>
+      </section>
+
+      <!-- 8. RECEIPT -->
+      <section class="screen" id="screen-receipt">
+        <h2 class="screen-title">Receipt</h2>
+        <div class="receipt" id="receipt-content"></div>
+        <div class="actions">
+          <button class="btn" data-action="menu">DONE</button>
+          <button class="btn btn-primary" data-action="print">PRINT</button>
+        </div>
+      </section>
+
+      <!-- 9. OTHER SERVICES -->
+      <section class="screen" id="screen-services">
+        <h2 class="screen-title">Other Services</h2>
+        <div class="menu-grid">
+          <button class="menu-btn accent-cyan" data-action="go-pending"><span class="m-ico">&#8634;</span>Pending Requests</button>
+          <button class="menu-btn accent-violet" data-action="go-dsa"><span class="m-ico">&#9881;</span>DSA Demonstration</button>
+          <button class="menu-btn accent-blue" data-action="go-balance"><span class="m-ico">&#8377;</span>Balance Inquiry</button>
+        </div>
+        <div class="actions">
+          <button class="btn" data-action="menu">BACK</button>
+        </div>
+      </section>
+
+      <!-- PENDING REQUESTS -->
+      <section class="screen" id="screen-pending" data-needs-keypad="true">
+        <h2 class="screen-title">Pending Requests (Queue)</h2>
+        <p class="screen-sub">Add requests, then process them First-In-First-Out</p>
+        <div class="field amount-field" id="pending-field" data-select="pending">
+          <label>Amount</label>
+          <div class="field-display" id="pending-display"></div>
+        </div>
+        <div class="actions pending-actions">
+          <button class="btn" data-action="pending-add-withdraw">ADD WITHDRAW</button>
+          <button class="btn" data-action="pending-add-deposit">ADD DEPOSIT</button>
+          <button class="btn btn-primary" data-action="pending-process">PROCESS NEXT</button>
+        </div>
+        <div class="pending-list" id="pending-list"></div>
+        <div class="actions">
+          <button class="btn" data-action="go-services">BACK</button>
+        </div>
+      </section>
+
+      <!-- 10. DSA DEMONSTRATION -->
+      <section class="screen" id="screen-dsa">
+        <h2 class="screen-title">DSA Demonstration</h2>
+        <p class="screen-sub">Live results from the Java backend &mdash; no front-end simulation</p>
+        <div class="dsa-tabs">
+          <button class="dsa-tab active" data-dsa-tab="stack">Stack</button>
+          <button class="dsa-tab" data-dsa-tab="queue">Queue</button>
+          <button class="dsa-tab" data-dsa-tab="search">Linear Search</button>
+          <button class="dsa-tab" data-dsa-tab="greedy">Greedy</button>
+        </div>
+
+        <div class="dsa-panel active" id="dsa-stack-panel">
+          <div class="dsa-head"><span>Transaction Stack (LIFO)</span>
+            <button class="btn btn-sm" data-action="dsa-refresh-stack">Refresh</button></div>
+          <p class="dsa-note">Top = most recent. Size: <span id="dsa-stack-size">0</span></p>
+          <div class="dsa-content" id="dsa-stack-content"></div>
+        </div>
+
+        <div class="dsa-panel" id="dsa-queue-panel">
+          <div class="dsa-head"><span>Pending Request Queue (FIFO)</span>
+            <button class="btn btn-sm" data-action="dsa-refresh-queue">Refresh</button></div>
+          <p class="dsa-note">Left = front (next out). Size: <span id="dsa-queue-size">0</span></p>
+          <div class="dsa-content" id="dsa-queue-content"></div>
+        </div>
+
+        <div class="dsa-panel" id="dsa-search-panel">
+          <div class="dsa-head"><span>Linear Search over accounts</span></div>
+          <div class="dsa-row">
+            <input type="text" id="dsa-search-input" inputmode="numeric" placeholder="Account number e.g. 1002" />
+            <button class="btn btn-sm btn-primary" data-action="dsa-search">SEARCH</button>
+          </div>
+          <div class="dsa-content" id="dsa-search-content"><p class="empty">Enter an account number and run the search.</p></div>
+        </div>
+
+        <div class="dsa-panel" id="dsa-greedy-panel">
+          <div class="dsa-head"><span>Greedy Cash Dispensing (dry run)</span></div>
+          <div class="dsa-row">
+            <input type="text" id="dsa-greedy-input" inputmode="numeric" placeholder="Amount e.g. 1330" />
+            <button class="btn btn-sm btn-primary" data-action="dsa-greedy">COMPUTE</button>
+          </div>
+          <div class="dsa-content" id="dsa-greedy-content"><p class="empty">Enter an amount (multiple of 10) to see the greedy note plan.</p></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn" data-action="go-services">BACK</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Shared numeric keypad -->
+    <div class="keypad" id="keypad" hidden>
+      <button class="key" data-key="1">1</button>
+      <button class="key" data-key="2">2</button>
+      <button class="key" data-key="3">3</button>
+      <button class="key" data-key="4">4</button>
+      <button class="key" data-key="5">5</button>
+      <button class="key" data-key="6">6</button>
+      <button class="key" data-key="7">7</button>
+      <button class="key" data-key="8">8</button>
+      <button class="key" data-key="9">9</button>
+      <button class="key key-clear" data-key="clear">C</button>
+      <button class="key" data-key="0">0</button>
+      <button class="key key-del" data-key="del">&#9003;</button>
+    </div>
+
+    <!-- Hardware slot graphics (decorative, non-interactive) -->
+    <footer class="atm-base">
+      <div class="slot"><span class="slot-bar"></span>CARD</div>
+      <div class="slot"><span class="slot-bar"></span>RECEIPT</div>
+      <div class="slot"><span class="slot-bar"></span>CASH</div>
+    </footer>
+  </div>
+
+  <!-- Loading overlay -->
+  <div class="overlay" id="loading" hidden>
+    <div class="spinner"></div>
+    <p class="overlay-text" id="loading-text">Processing...</p>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="notification" id="notification" hidden></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/keypad.js"></script>
+  <script src="/js/dsa-visualizer.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+/* ============================================================
+   NEXUS BANK ATM  -  animations.css
+   ============================================================ */
+
+/* Screen transitions */
+.screen {
+  animation: screen-in 0.28s ease both;
+}
+@keyframes screen-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Spinner rotation */
+.spinner { animation: spin 0.8s linear infinite; }
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Overlay fade */
+.overlay { animation: fade-in 0.18s ease both; }
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Notification toast */
+.notification.show {
+  animation: toast-in 0.28s cubic-bezier(0.2, 0.9, 0.3, 1.2) both,
+             toast-out 0.3s ease 2.6s forwards;
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(24px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes toast-out {
+  to { opacity: 0; transform: translateX(-50%) translateY(24px); }
+}
+
+/* Welcome chip shimmer */
+.welcome-chip { animation: chip-glow 2.6s ease-in-out infinite; }
+@keyframes chip-glow {
+  0%, 100% { box-shadow: 0 0 14px rgba(212, 160, 23, 0.4), inset 0 0 0 3px rgba(255,255,255,0.25); }
+  50%      { box-shadow: 0 0 26px rgba(212, 160, 23, 0.75), inset 0 0 0 3px rgba(255,255,255,0.4); }
+}
+
+/* Online dot pulse */
+.status-dot { animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 6px var(--green); }
+  50%      { box-shadow: 0 0 14px var(--green); }
+}
+
+/* Balance amount pop */
+.balance-amount.pop { animation: pop 0.4s ease both; }
+@keyframes pop {
+  0% { transform: scale(0.8); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Stack/queue item entrance */
+.stack-item, .q-item, .greedy-row, .search-cell, .history-item, .pend-item {
+  animation: rise 0.25s ease both;
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Keypad press handled via .pressed class in style.css */
